@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class Jackets implements Serializable {
+public class Jackets implements Serializable, Comparable<Jackets> {
     private final String brand;
     private final String color;
     private final int price;
@@ -131,19 +131,21 @@ public class Jackets implements Serializable {
         return price == jackets.price && Objects.equals(brand, jackets.brand) && Objects.equals(color, jackets.color);
     }
 
-//    @Override
-//    public int compareTo(Jackets otherJacket) {
-//        return Integer.compare(this.price, otherJacket.price);
-//    }
-
-
     @Override
-    public int hashCode() {
-        return Objects.hash(brand, color, price);
+    public int compareTo(Jackets otherJacket) {
+        return Integer.compare(this.price, otherJacket.price);
     }
 
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(brand, color, price);
+//    }
+
     /**
+     * configures an instance of XStream for XML serialization, allowing deserialization of classes within the "org.example" package and subpackages
      * The allowTypesByWildCard allows you to specify packages/classes that should be allowed for deserialization
+     * Basically it tells that any classes in the org.example package  are safe to deserialize, without the configuration
+     * XStream might consider the class as "forbidden", hence the  ForbiddenClassException
      * @return
      */
     private static XStream createXStream() {
